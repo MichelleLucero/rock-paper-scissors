@@ -38,12 +38,9 @@ public class Game {
         System.out.println("1. Type 'play' to play.");
         System.out.println("2. Type 'history' to view your game history.");
         System.out.println("3. Type 'quit' to stop playing.");
-//        System.out.println("\nplay");
-//        System.out.println("\n\nType 'rock', 'paper', or 'scissors' to play.");
-//        System.out.println("Type 'quit' to go back to the main menu.");
     }
 
-    public static String playerMenuChoice() {
+    public static String mainMenuChoice() {
         mainMenu();
         Scanner scanner = new Scanner(System.in);
         String input = "";
@@ -59,7 +56,12 @@ public class Game {
         return input;
     }
 
-    public String chooseWinner(String player1Choice, String player2Choice){
+    public static void playMenu(){
+        System.out.println("\n\nType 'rock', 'paper', or 'scissors' to play.");
+        System.out.println("Type 'quit' to go back to the main menu.");
+    }
+
+    public static String chooseWinner(String player1Choice, String player2Choice){
 
         if( player1Choice.equals("rock") && player2Choice.equals("scissors") ){
             return "player1";
@@ -81,28 +83,36 @@ public class Game {
 
         return "tie";
     }
-
+// player2 will be either ComputerPlayer or HumanPlayer
     public static void playGame(Player player1, Player player2){
         System.out.println("Hello");
         boolean isGameInProgress = true;
         while(isGameInProgress){
-            String menuChoice = playerMenuChoice();
+            String menuChoice = mainMenuChoice();
+            if(menuChoice.equals("play")){
+                playMenu();
+                System.out.println("Player1's turn");
+                String player1Choice = player1.playerChoice();
+                System.out.println("Player2's turn");
+                String player2Choice = player2.playerChoice();
+                String result = chooseWinner(player1Choice, player2Choice);
+                System.out.println(result);
+            }
 
-            System.out.println(menuChoice);
         }
     }
 
+//  who types history player?? should I ask for clarification of whose history;
     public static void main(String[] args) {
         String gameModeChoice = gameMode();
-        HumanPlayer player1 = new HumanPlayer();
+        HumanPlayer player1 = new HumanPlayer("player1");
         if (gameModeChoice.equals("2 players")){
-            HumanPlayer player2 = new HumanPlayer();
+            HumanPlayer player2 = new HumanPlayer("player2");
             playGame(player1, player2);
         } else {
-            ComputerPlayer player2 = new ComputerPlayer();
+            ComputerPlayer player2 = new ComputerPlayer("computer");
             playGame(player1, player2);
         }
-
     }
 
 }

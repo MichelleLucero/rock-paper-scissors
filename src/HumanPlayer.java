@@ -2,6 +2,10 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class HumanPlayer extends Player{
+    public HumanPlayer(String playerType){
+        super(playerType);
+    }
+
     //    error handle later
     @Override
     public String playerChoice() {
@@ -9,7 +13,7 @@ public class HumanPlayer extends Player{
         String input = "";
         while(!isValidOption){
             input = playerInput();
-            if(input.equals("rock") || input.equals("paper") || input.equals("scissors")){
+            if(input.equals("rock") || input.equals("paper") || input.equals("scissors") || input.equals("quit")){
                 isValidOption = true;
             } else {
                 System.out.println("Invalid Choice. Pick play, history, or quit.");
@@ -17,6 +21,7 @@ public class HumanPlayer extends Player{
         }
         return input;
     }
+
 
 
     public String playerInput() {

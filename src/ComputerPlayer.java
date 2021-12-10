@@ -1,6 +1,10 @@
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
+    public ComputerPlayer(String playerType){
+        super(playerType);
+    }
+
     private String[] choices = {"rock", "paper", "scissors"};
     @Override
     public String playerChoice() {
@@ -9,4 +13,6 @@ public class ComputerPlayer extends Player {
         System.out.println(index);
         return choices[index];
     }
+
+
 }
