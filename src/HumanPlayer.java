@@ -24,7 +24,6 @@ public class HumanPlayer extends Player{
     }
 
 
-
     public String playerInput(){
         String playerChoice = "";
         Scanner scanner = new Scanner(System.in);

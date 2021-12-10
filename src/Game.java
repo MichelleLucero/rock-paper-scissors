@@ -4,13 +4,6 @@ import java.util.Scanner;
 public class Game {
     private static String gameModeOption1 = "2 players";
     private static String gameModeOption2 = "vs. computer";
-    private static Player player1;
-    private static Player player2;
-
-    public Game(Player player1, Player player2){
-        this.player1 = player1;
-        this.player2 = player2;
-    }
 
     public static String gameMode(){
         Scanner scanner = new Scanner(System.in);
@@ -56,13 +49,6 @@ public class Game {
         return input;
     }
 
-    public static Player getPlayer1(){
-        return player1;
-    }
-
-    public static Player getPlayer2(){
-        return player2;
-    }
     public static String historyChoice(Player player1, Player player2) {
         System.out.println("Whose history?");
         System.out.println("Type '" + player1.getPlayerType() + "' for " + player1.getPlayerType() + "'s history");
@@ -72,13 +58,13 @@ public class Game {
         boolean isValidOption = false;
         while(!isValidOption){
             input = scanner.nextLine().toLowerCase();
-            if(input.equals(player1.getPlayerType().toLowerCase()) || input.equals(player2.getPlayerType().toLowerCase())){
+            if(input.equals(player1.getPlayerType()) || input.equals(player2.getPlayerType())){
                 isValidOption = true;
             } else {
                 System.out.println("Invalid Choice. Pick " + player1.getPlayerType() + " or " + player2.getPlayerType());
             }
         }
-        return input.substring(0,1).toUpperCase() + input.substring(1).toLowerCase();
+        return input;
     }
 
     public static void playMenu(){
@@ -164,7 +150,7 @@ public class Game {
 
             } else {
                 overallWinner(player1, player2);
-                System.out.println("\n===Ended Game===");
+                System.out.println("\n===ENDED GAME===");
                 isGameInProgress = false;
             }
         }
@@ -173,9 +159,9 @@ public class Game {
 //  who types history player?? should I ask for clarification of whose history;
     public static void main(String[] args) {
         String gameModeChoice = gameMode();
-        HumanPlayer player1 = new HumanPlayer("Bob");
+        HumanPlayer player1 = new HumanPlayer("suresh");
         if (gameModeChoice.equals("2 players")){
-            HumanPlayer player2 = new HumanPlayer("Fred");
+            HumanPlayer player2 = new HumanPlayer("david");
             playGame(player1, player2);
         } else {
             ComputerPlayer player2 = new ComputerPlayer();

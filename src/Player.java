@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 abstract class Player {
     private int winCount;
@@ -9,7 +10,7 @@ abstract class Player {
 //    Manage the state of the player
 
     public Player(String playerType){
-        this.playerType = playerType;
+        this.playerType = playerType.toLowerCase();
         this.playerGameHistory = new ArrayList<String[]>();
         this.winCount = 0;
     }
