@@ -71,14 +71,14 @@ public class Game {
         String input = "";
         boolean isValidOption = false;
         while(!isValidOption){
-            input = scanner.nextLine();
-            if(input.equals(player1.getPlayerType()) || input.equals(player2.getPlayerType())){
+            input = scanner.nextLine().toLowerCase();
+            if(input.equals(player1.getPlayerType().toLowerCase()) || input.equals(player2.getPlayerType().toLowerCase())){
                 isValidOption = true;
             } else {
                 System.out.println("Invalid Choice. Pick " + player1.getPlayerType() + " or " + player2.getPlayerType());
             }
         }
-        return input;
+        return input.substring(0,1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
     public static void playMenu(){
@@ -134,7 +134,7 @@ public class Game {
         return result;
     }
 
-//  Call this when game is over to Annouce official winner
+//  Call this when game is over to announce official winner
     public static void overallWinner(Player player1, Player player2){
         if(player1.getWinCount() > player2.getWinCount()){
             System.out.println("\n"+ player1.getPlayerType() + " won overall!!!");
@@ -155,6 +155,7 @@ public class Game {
 
             } else if(menuChoice.equals("history")){
                 String playerHistoryChoice = historyChoice(player1, player2);
+
                 if(playerHistoryChoice.equals(player1.getPlayerType())){
                     player1.getHistoryOutput(player2);
                 } else{
@@ -163,7 +164,7 @@ public class Game {
 
             } else {
                 overallWinner(player1, player2);
-                System.out.println("\nEnded Game");
+                System.out.println("\n===Ended Game===");
                 isGameInProgress = false;
             }
         }
@@ -172,9 +173,9 @@ public class Game {
 //  who types history player?? should I ask for clarification of whose history;
     public static void main(String[] args) {
         String gameModeChoice = gameMode();
-        HumanPlayer player1 = new HumanPlayer("player1");
+        HumanPlayer player1 = new HumanPlayer("Bob");
         if (gameModeChoice.equals("2 players")){
-            HumanPlayer player2 = new HumanPlayer("player2");
+            HumanPlayer player2 = new HumanPlayer("Fred");
             playGame(player1, player2);
         } else {
             ComputerPlayer player2 = new ComputerPlayer();
