@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
-    public ComputerPlayer(String playerType){
-        super(playerType);
+    public ComputerPlayer(){
+        super("computer");
     }
 
     private String[] choices = {"rock", "paper", "scissors"};

@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -12,11 +13,11 @@ public class HumanPlayer extends Player{
         boolean isValidOption = false;
         String input = "";
         while(!isValidOption){
-            input = playerInput();
+            input = playerInput().toLowerCase();
             if(input.equals("rock") || input.equals("paper") || input.equals("scissors") || input.equals("quit")){
                 isValidOption = true;
             } else {
-                System.out.println("Invalid Choice. Pick play, history, or quit.");
+                System.out.println("Invalid Choice. Pick rock, paper, or scissors.");
             }
         }
         return input;
@@ -24,9 +25,11 @@ public class HumanPlayer extends Player{
 
 
 
-    public String playerInput() {
+    public String playerInput(){
+        String playerChoice = "";
         Scanner scanner = new Scanner(System.in);
-        String playerChoice = scanner.nextLine();
+        playerChoice = scanner.nextLine();
+
         return playerChoice.toLowerCase();
     }
 }

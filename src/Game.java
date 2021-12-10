@@ -46,7 +46,7 @@ public class Game {
         String input = "";
         boolean isValidOption = false;
         while(!isValidOption){
-            input = scanner.nextLine();
+            input = scanner.nextLine().toLowerCase();
             if(input.equals("play") || input.equals("history") || input.equals("quit")){
                 isValidOption = true;
             } else {
@@ -87,11 +87,14 @@ public class Game {
     }
 
     public static String chooseWinner(Player player1, Player player2){
-        System.out.println("\n" + player1.getPlayerType() + "'s turn");
-        String player1Choice = player1.playerChoice();
-        System.out.println("\n" + player2.getPlayerType() + "'s turn");
-        String player2Choice = player2.playerChoice();
+        String player1Choice = "";
+        String player2Choice = "";
         String result = "Tie";
+
+        System.out.println("\n" + player1.getPlayerType() + "'s turn");
+        player1Choice = player1.playerChoice();
+        System.out.println("\n" + player2.getPlayerType() + "'s turn");
+        player2Choice = player2.playerChoice();
 
         if( player1Choice.equals("rock") && player2Choice.equals("scissors") ){
             result =  player1.getPlayerType();
@@ -131,6 +134,7 @@ public class Game {
         return result;
     }
 
+//  Call this when game is over to Annouce official winner
     public static void overallWinner(Player player1, Player player2){
         if(player1.getWinCount() > player2.getWinCount()){
             System.out.println("\n"+ player1.getPlayerType() + " won overall!!!");
@@ -141,7 +145,7 @@ public class Game {
         }
     }
 // player2 will be either ComputerPlayer or HumanPlayer
-    public static void playGame(Player player1, Player player2){
+    public static void playGame(Player player1, Player player2) {
         boolean isGameInProgress = true;
         while(isGameInProgress){
             String menuChoice = mainMenuChoice();
@@ -173,7 +177,7 @@ public class Game {
             HumanPlayer player2 = new HumanPlayer("player2");
             playGame(player1, player2);
         } else {
-            ComputerPlayer player2 = new ComputerPlayer("computer");
+            ComputerPlayer player2 = new ComputerPlayer();
             playGame(player1, player2);
         }
     }
