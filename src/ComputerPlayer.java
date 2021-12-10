@@ -10,7 +10,7 @@ public class ComputerPlayer extends Player {
     public String playerChoice() {
         Random random = new Random();
         int index = random.nextInt(3);
-        System.out.println(index);
+        System.out.println(choices[index]);
         return choices[index];
     }
 

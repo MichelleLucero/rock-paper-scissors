@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class Game {
     private static String gameModeOption1 = "2 players";
     private static String gameModeOption2 = "vs. computer";
-    private Player player1;
-    private Player player2;
+    private static Player player1;
+    private static Player player2;
 
     public Game(Player player1, Player player2){
         this.player1 = player1;
@@ -56,49 +56,112 @@ public class Game {
         return input;
     }
 
+    public static Player getPlayer1(){
+        return player1;
+    }
+
+    public static Player getPlayer2(){
+        return player2;
+    }
+    public static String historyChoice(Player player1, Player player2) {
+        System.out.println("Whose history?");
+        System.out.println("Type '" + player1.getPlayerType() + "' for " + player1.getPlayerType() + "'s history");
+        System.out.println("Type '" + player2.getPlayerType() + "' for " + player2.getPlayerType() + "'s history");
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
+        boolean isValidOption = false;
+        while(!isValidOption){
+            input = scanner.nextLine();
+            if(input.equals(player1.getPlayerType()) || input.equals(player2.getPlayerType())){
+                isValidOption = true;
+            } else {
+                System.out.println("Invalid Choice. Pick " + player1.getPlayerType() + " or " + player2.getPlayerType());
+            }
+        }
+        return input;
+    }
+
     public static void playMenu(){
         System.out.println("\n\nType 'rock', 'paper', or 'scissors' to play.");
         System.out.println("Type 'quit' to go back to the main menu.");
     }
 
-    public static String chooseWinner(String player1Choice, String player2Choice){
+    public static String chooseWinner(Player player1, Player player2){
+        System.out.println("\n" + player1.getPlayerType() + "'s turn");
+        String player1Choice = player1.playerChoice();
+        System.out.println("\n" + player2.getPlayerType() + "'s turn");
+        String player2Choice = player2.playerChoice();
+        String result = "Tie";
 
         if( player1Choice.equals("rock") && player2Choice.equals("scissors") ){
-            return "player1";
+            result =  player1.getPlayerType();
+            player1.incrementWinCount();
         } else if ( player2Choice.equals("rock") && player1Choice.equals("scissors") ){
-            return "player2";
+            result =  player2.getPlayerType();
+            player2.incrementWinCount();
         }
 
         if ( player1Choice.equals("scissors") && player2Choice.equals("paper") ){
-            return "player1";
+            result = player1.getPlayerType();
+            player1.incrementWinCount();
         } else if (player2Choice.equals("scissors") && player1Choice.equals("paper")){
-            return "player2";
+            result =  player2.getPlayerType();
+            player2.incrementWinCount();
         }
 
         if ( player1Choice.equals("paper") && player2Choice.equals("rock") ){
-            return "player1";
+            result =  player1.getPlayerType();
+            player1.incrementWinCount();
         } else if (player2Choice.equals("paper") && player1Choice.equals("rock") ){
-            return "player2";
+            result = player2.getPlayerType();
+            player2.incrementWinCount();
         }
 
-        return "tie";
+        // Adding contents to both player's history
+        player1.addChoiceToHistory(player1Choice, result);
+        player2.addChoiceToHistory(player2Choice, result);
+
+        // Announcing game outcome
+        if(!result.equals("Tie")){
+            System.out.println("\n" + result + " won!");
+        } else{
+            System.out.println("\nIt's a tie!");
+        }
+
+        return result;
+    }
+
+    public static void overallWinner(Player player1, Player player2){
+        if(player1.getWinCount() > player2.getWinCount()){
+            System.out.println("\n"+ player1.getPlayerType() + " won overall!!!");
+        } else if( player2.getWinCount() > player1.getWinCount()){
+            System.out.println("\n"+ player2.getPlayerType() + " won overall!!!");
+        } else {
+            System.out.println("\nOverall it's a tie!!!");
+        }
     }
 // player2 will be either ComputerPlayer or HumanPlayer
     public static void playGame(Player player1, Player player2){
-        System.out.println("Hello");
         boolean isGameInProgress = true;
         while(isGameInProgress){
             String menuChoice = mainMenuChoice();
             if(menuChoice.equals("play")){
                 playMenu();
-                System.out.println("Player1's turn");
-                String player1Choice = player1.playerChoice();
-                System.out.println("Player2's turn");
-                String player2Choice = player2.playerChoice();
-                String result = chooseWinner(player1Choice, player2Choice);
-                System.out.println(result);
-            }
+                chooseWinner(player1, player2);
 
+            } else if(menuChoice.equals("history")){
+                String playerHistoryChoice = historyChoice(player1, player2);
+                if(playerHistoryChoice.equals(player1.getPlayerType())){
+                    player1.getHistoryOutput(player2);
+                } else{
+                    player2.getHistoryOutput(player1);
+                }
+
+            } else {
+                overallWinner(player1, player2);
+                System.out.println("\nEnded Game");
+                isGameInProgress = false;
+            }
         }
     }
 

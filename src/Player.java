@@ -1,13 +1,17 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 abstract class Player {
     private int winCount;
     private String playerType;
-    private List<String[]> playerGameHistory;
+    private ArrayList<String[]> playerGameHistory;
 //    Manage the state of the player
 
     public Player(String playerType){
         this.playerType = playerType;
+        this.playerGameHistory = new ArrayList<String[]>();
+        this.winCount = 0;
     }
 
 //    state if they won or lost
@@ -19,8 +23,20 @@ abstract class Player {
         playerGameHistory.add(currentGameHistory);
     }
 
-    public List<String[]> getHistory(){
+    public ArrayList<String[]> getHistory(){
         return playerGameHistory;
+    }
+
+    public String getPlayerType(){
+        return playerType;
+    }
+
+    public void incrementWinCount(){
+        winCount++;
+    }
+
+    public int getWinCount(){
+        return winCount;
     }
 
     public void getHistoryOutput(Player otherPlayer){
@@ -29,7 +45,7 @@ abstract class Player {
             String playerChoice = playerGameHistory.get(i)[0];
             String playerResult = playerGameHistory.get(i)[1];
             String otherPlayerChoice = otherPlayer.getHistory().get(i)[0];
-            String line = playerType + " picked " + playerChoice + ", " + otherPlayer.getPlayerType() + "picked " + otherPlayerChoice;
+            String line = playerType + " picked " + playerChoice + ", " + otherPlayer.getPlayerType() + " picked " + otherPlayerChoice;
             if(playerResult.equals(playerType)){
                 System.out.println("WIN: " + line);
             } else if(playerResult.equals(otherPlayer.getPlayerType())){
@@ -39,10 +55,5 @@ abstract class Player {
             }
         }
     }
-
-    public String getPlayerType(){
-        return playerType;
-    }
-
 
 }
